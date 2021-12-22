@@ -11,7 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import useGetList from '../../hooks/useGetList';
-import { Screens } from '../screens';
+import { Screens } from '../../enums/screens';
 import Pagination from '../../components/Pagination';
 import { FilterContext } from '../../contexts/filter';
 import Search from '../../components/Search';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -10,7 +10,16 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import api from '../../api/api';
+import { RouteProp } from '@react-navigation/native';
+
+import useCoinData from '../../hooks/useCoinData';
+import { Screens } from '../../enums/screens';
+import { RootStackParamList } from '../../../App';
+
+type ProfileScreenRouteProp = RouteProp<
+  RootStackParamList,
+  Screens.CryptoDetailModal
+>;
 
 const styles = StyleSheet.create({
   container: {
@@ -36,25 +45,10 @@ const styles = StyleSheet.create({
 
 const CryptoDetailModal = () => {
   const { goBack } = useNavigation();
-  const {
-    params: { cryptocurrencyId },
-  } = useRoute();
-  const [loading, setLoading] = useState(true);
-  const [cryptocurrency, setCryptocurrency] = useState({});
+  const { params } = useRoute<ProfileScreenRouteProp>();
+  const { coin, loading } = useCoinData(params?.cryptocurrencyId);
 
-  useEffect(() => {
-    const fetchCrypto = async () => {
-      setLoading(true);
-      const { data } = await api.get(
-        `coins/${cryptocurrencyId}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`,
-      );
-      setCryptocurrency(data);
-      setLoading(false);
-    };
-    fetchCrypto();
-  }, [cryptocurrencyId]);
-
-  if (loading) {
+  if (loading || !coin) {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <ActivityIndicator size="large" />
@@ -64,8 +58,8 @@ const CryptoDetailModal = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {Object.keys(cryptocurrency)
-        .filter(key => cryptocurrency[key])
+      {Object.keys(coin)
+        .filter(key => coin[key])
         .map(key => {
           switch (key) {
             case 'image':
@@ -80,7 +74,7 @@ const CryptoDetailModal = () => {
             case 'roi':
               return (
                 <Image
-                  source={{ uri: cryptocurrency[key] }}
+                  source={{ uri: coin[key] }}
                   width={32}
                   height={32}
                   resizeMode="contain"
@@ -89,8 +83,8 @@ const CryptoDetailModal = () => {
               );
             default:
               const value = key.includes('date')
-                ? moment(`${cryptocurrency[key]}`).format('lll')
-                : cryptocurrency[key];
+                ? moment(`${coin[key]}`).format('lll')
+                : coin[key];
               return (
                 <View
                   style={{

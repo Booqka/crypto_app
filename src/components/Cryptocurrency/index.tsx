@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Screens } from '../../screens/screens';
+import { Screens } from '../../enums/screens';
 import React from 'react';
 
 const styles = StyleSheet.create({

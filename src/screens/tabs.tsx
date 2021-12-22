@@ -3,7 +3,7 @@ import {
   BottomTabBarProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { Screens } from './screens';
+import { Screens } from '../enums/screens';
 import Main from './Main';
 import Trending from './Trending';
 import GlobalMarket from './GlobalMarket';

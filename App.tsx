@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import { Screens } from './src/screens/screens';
+import { Screens } from './src/enums/screens';
 import TabStack from './src/screens/tabs';
 import FilterModal from './src/screens/FilterModal';
 import CryptoDetailModal from './src/screens/CryptoDetailModal';
@@ -12,7 +12,14 @@ import FilterProvider from './src/contexts/filter';
 import CoinsProvider from './src/contexts/coins';
 import Network from './src/screens/Network';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  [Screens.FilterModal]: undefined;
+  [Screens.Network]: undefined;
+  [Screens.TabStack]: undefined;
+  [Screens.CryptoDetailModal]: { cryptocurrencyId: string };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
