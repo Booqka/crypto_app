@@ -59,7 +59,7 @@ const MarketValue = ({ item }: MarketValueProps) => {
   return (
     <View style={styles.itemContainer}>
       <Text style={styles.symbol}>Symbol: {item[0]}</Text>
-      <Text style={styles.full}>marketValue: {item[1]}</Text>
+      <Text style={styles.full}>marketValue: {item[1].toLocaleString()}</Text>
     </View>
   );
 };

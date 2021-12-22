@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 });
 
 const Main: React.FC = () => {
-  const { page, setPage } = useContext(FilterContext);
+  const { page, setPage, currency } = useContext(FilterContext);
   const { data, loading, fetchData } = useGetList();
   const { navigate } = useNavigation();
   const { search, setSearch } = useSearch();
@@ -78,7 +78,11 @@ const Main: React.FC = () => {
           contentContainerStyle={styles.contentContainer}
           data={data}
           renderItem={item => (
-            <Cryptocurrency navigate={navigate} item={item.item} />
+            <Cryptocurrency
+              currency={currency}
+              navigate={navigate}
+              item={item.item}
+            />
           )}
         />
       )}

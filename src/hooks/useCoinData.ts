@@ -10,7 +10,7 @@ interface ReturnType {
 
 const useCoinData = (id: string): ReturnType => {
   const [coin, setCoin] = useState(undefined);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCoin = async () => {
@@ -19,7 +19,7 @@ const useCoinData = (id: string): ReturnType => {
         const response = await api.get(
           `coins/${id}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`,
         );
-        setCoin(response.data.data);
+        setCoin(response.data);
       } catch (error: any) {
         Toast.show({
           type: 'error',
